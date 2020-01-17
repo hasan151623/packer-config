@@ -7,16 +7,8 @@
       "type": "amazon-ebs",
       "profile": "dingi-sigmind",
       "region": "us-west-2",
-      "source_ami_filter": {
-        "filters": {
-          "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
-        },
-        "most_recent": true,
-        "owners": [
-          "099720109477"
-        ]
-      },
-      "instance_type": "t2.micro",
+      "source_ami": "ami-0d1cd67c26f5fca19",
+      "instance_type": "t2.large",
       "ssh_username": "ubuntu",
       "ami_name": "app-server-{{timestamp}}"
     }
@@ -31,7 +23,10 @@
       "type": "shell",
       "inline": [
         "ls -la /home/ubuntu",
-        "sudo chmod -R +x ./scripts/*.sh"
+        "cd scripts",
+        "sudo chmod +x *.sh",
+        "sudo ./install_java.sh",
+        "sudo ./install_elasticsearch.sh"
       ]
     },
     {

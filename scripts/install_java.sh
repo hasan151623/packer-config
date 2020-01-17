@@ -1,3 +1,2 @@
 #!/bin/bash
-sudo apt-get update
-sudo apt-get install default-jre
+apt-get update -y && install openjdk-8-jre -y
