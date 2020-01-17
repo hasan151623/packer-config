@@ -1,2 +1,3 @@
 #!/bin/bash
-apt-get update -y && install openjdk-8-jre -y
+# install JRE(Java Runtime Environment) from openJDK 
+apt-get update -y  && apt-get install openjdk-8-jre -y

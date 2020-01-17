@@ -1,37 +1,37 @@
 {
-  "variables": {
-    "aws-profile": ""
-  },
-  "builders": [
-    {
-      "type": "amazon-ebs",
-      "profile": "dingi-sigmind",
-      "region": "us-west-2",
-      "source_ami": "ami-0d1cd67c26f5fca19",
-      "instance_type": "t2.large",
-      "ssh_username": "ubuntu",
-      "ami_name": "app-server-{{timestamp}}"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "file",
-      "source": "./scripts",
-      "destination": "/home/ubuntu/"
+    "variables": {
+        "aws-profile": ""
     },
-    {
-      "type": "shell",
-      "inline": [
-        "ls -la /home/ubuntu",
-        "cd scripts",
-        "sudo chmod +x *.sh",
-        "sudo ./install_java.sh",
-        "sudo ./install_elasticsearch.sh"
-      ]
-    },
-    {
-      "type": "shell",
-      "script": "./bash.sh"
-    }
-  ]
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "profile": "{{ user `aws-profile` }}",
+            "region": "us-west-2",
+            "source_ami": "ami-0d1cd67c26f5fca19",
+            "instance_type": "t2.large",
+            "ssh_username": "ubuntu",
+            "ami_name": "app-server-{{timestamp}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./scripts",
+            "destination": "/home/ubuntu/"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "ls -la /home/ubuntu",
+                "cd scripts",
+                "sudo chmod +x *.sh",
+                "sudo ./install_elasticsearch.sh",
+                "sudo ./install_redis.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "script": "./completed.sh"
+        }
+    ]
 }
