@@ -1,0 +1,42 @@
+{
+  "variables": {
+    "aws-profile": ""
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "dingi-sigmind",
+      "region": "us-west-2",
+      "source_ami_filter": {
+        "filters": {
+          "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
+        },
+        "most_recent": true,
+        "owners": [
+          "099720109477"
+        ]
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "app-server-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./scripts",
+      "destination": "/home/ubuntu/"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "ls -la /home/ubuntu",
+        "sudo chmod -R +x ./scripts/*.sh"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "./bash.sh"
+    }
+  ]
+}
