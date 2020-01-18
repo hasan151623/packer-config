@@ -1,0 +1,40 @@
+{
+    "variables": {
+        "aws-profile": ""
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "profile": "{{ user `aws-profile` }}",
+            "region": "us-west-2",
+            "source_ami": "ami-0d1cd67c26f5fca19",
+            "instance_type": "t2.micro",
+            "ssh_username": "ubuntu",
+            "ami_name": "web-server-{{timestamp}}",
+            "tags": {
+                "Name": "Web Server"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./scripts",
+            "destination": "/home/ubuntu/"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "ls -la /home/ubuntu",
+                "cd scripts",
+                "sudo chmod +x *.sh",
+                "sudo ./install_nginx.sh",
+                "sudo ./install_node.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "script": "./completed.sh"
+        }
+    ]
+}

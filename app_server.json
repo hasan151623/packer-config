@@ -8,9 +8,12 @@
             "profile": "{{ user `aws-profile` }}",
             "region": "us-west-2",
             "source_ami": "ami-0d1cd67c26f5fca19",
-            "instance_type": "t2.large",
+            "instance_type": "t2.micro",
             "ssh_username": "ubuntu",
-            "ami_name": "app-server-{{timestamp}}"
+            "ami_name": "app-server-{{timestamp}}",
+            "tags": {
+                "Name": "App Server"
+            }
         }
     ],
     "provisioners": [
@@ -25,8 +28,8 @@
                 "ls -la /home/ubuntu",
                 "cd scripts",
                 "sudo chmod +x *.sh",
-                "sudo ./install_elasticsearch.sh",
-                "sudo ./install_redis.sh"
+                "sudo ./install_nginx.sh",
+                "sudo ./install_codedeploy_agent.sh"
             ]
         },
         {
