@@ -29,6 +29,7 @@
                 "cd scripts",
                 "sudo chmod +x *.sh",
                 "sudo ./install_nginx.sh",
+                "sudo ./install_codedeploy_agent.sh",
                 "sudo ./install_node.sh"
             ]
         },
